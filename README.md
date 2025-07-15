@@ -13,4 +13,4 @@ This prototype demonstrates an agent-based architecture for validating trade doc
 ## Setup
 
 1. Install requirements: `pip install -r requirements.txt`
-2. Run the app: `python main.py`
+2. Run the app: `streamlit run main.py`
