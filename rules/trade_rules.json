@@ -1,0 +1,82 @@
+[
+  {
+    "rule_id": "BL-001",
+    "document_type": "Bill of Lading",
+    "description": "Shipment date must be on or before LC latest shipment date",
+    "severity": "High",
+    "action_on_failure": "Reject",
+    "validation_logic": "if b_l.shipment_date > lc.latest_shipment_date: return 'fail'"
+  },
+  {
+    "rule_id": "BL-002",
+    "document_type": "Bill of Lading",
+    "description": "Port of loading must match LC specified port",
+    "severity": "High",
+    "action_on_failure": "Reject",
+    "validation_logic": "if b_l.port_of_loading != lc.port_of_loading: return 'fail'"
+  },
+  {
+    "rule_id": "BL-003",
+    "document_type": "Bill of Lading",
+    "description": "Port of discharge must match LC specified destination",
+    "severity": "High",
+    "action_on_failure": "Reject",
+    "validation_logic": "if b_l.port_of_discharge != lc.destination_port: return 'fail'"
+  },
+  {
+    "rule_id": "BL-004",
+    "document_type": "Bill of Lading",
+    "description": "B/L must be clean on board (no clauses about defective packing)",
+    "severity": "High",
+    "action_on_failure": "Reject",
+    "validation_logic": "if 'defective packing' in b_l.clauses: return 'fail'"
+  },
+  {
+    "rule_id": "BL-005",
+    "document_type": "Bill of Lading",
+    "description": "B/L must be consigned to issuing bank or as instructed in LC",
+    "severity": "High",
+    "action_on_failure": "Reject",
+    "validation_logic": "if b_l.consignee != lc.consignee: return 'fail'"
+  },
+  {
+    "rule_id": "BL-006",
+    "document_type": "Bill of Lading",
+    "description": "B/L must be signed and stamped by carrier or their agent",
+    "severity": "High",
+    "action_on_failure": "Reject",
+    "validation_logic": "if not b_l.signed or not b_l.stamped: return 'fail'"
+  },
+  {
+    "rule_id": "BL-007",
+    "document_type": "Bill of Lading",
+    "description": "Number of originals issued must be stated",
+    "severity": "Medium",
+    "action_on_failure": "Review",
+    "validation_logic": "if not b_l.num_originals: return 'fail'"
+  },
+  {
+    "rule_id": "CD-001",
+    "document_type": "Invoice + B/L",
+    "description": "Shipment date on B/L ≤ Invoice date",
+    "severity": "Medium",
+    "action_on_failure": "Review",
+    "validation_logic": "if b_l.shipment_date > invoice.date: return 'fail'"
+  },
+  {
+    "rule_id": "CD-002",
+    "document_type": "Invoice + B/L",
+    "description": "Description of goods must match across Invoice and B/L",
+    "severity": "Medium",
+    "action_on_failure": "Review",
+    "validation_logic": "if b_l.goods_description != invoice.goods_description: return 'fail'"
+  },
+  {
+    "rule_id": "CD-003",
+    "document_type": "Invoice + B/L",
+    "description": "Quantity must match across Invoice and B/L",
+    "severity": "Medium",
+    "action_on_failure": "Review",
+    "validation_logic": "if b_l.quantity != invoice.quantity: return 'fail'"
+  }
+]
